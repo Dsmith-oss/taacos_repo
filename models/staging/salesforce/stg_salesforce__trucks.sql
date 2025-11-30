@@ -37,14 +37,7 @@ SELECT DISTINCT -- remove duplicates
     
     year,
     
-    -- replace nulls
-    COALESCE(
-    REGEXP_REPLACE(
-        REGEXP_REPLACE(INITCAP(TRIM(make)), 'Ã«', 'e'),
-        'ÃƒÂ«', 'e'
-    ),
-    'Custom'
-) AS make,
+    COALESCE(make, 'Custom') AS make,
 
 
     
@@ -53,4 +46,4 @@ SELECT DISTINCT -- remove duplicates
     
     opening_date
 
-FROM tacos.raw.trucks
+FROM {{ source('salesforce', 'trucks') }}
